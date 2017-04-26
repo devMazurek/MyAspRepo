@@ -11,7 +11,7 @@ namespace AHP2.Models
     {
         public int Id { set; get; }
 
-        [Display(Name = "Your e")]
+        [Display(Name = "Your emai")]
         [EmailAddress, Required(ErrorMessage = "Email is required")]
         public string EmailAdress { set; get; }
 
