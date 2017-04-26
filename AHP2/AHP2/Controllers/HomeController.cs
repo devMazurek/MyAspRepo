@@ -12,7 +12,8 @@ namespace AHP2.Controllers
     {
         public ActionResult Index()
         {
-            return View("asd");
+            var a = _ormContext.AlternativesContext.ToList();
+            return View();
         }
 
         public ActionResult About()
