@@ -11,44 +11,76 @@ namespace AHP2.Controllers
     [MyAuth]
     public class UserController : BaseController
     {
-        // GET: User
-        public ActionResult Index()
+        [AllowAnonymous]
+        public ActionResult Register()
         {
-            var user = _ormContext.UsersContext
-                .Where(u => u.Id == 1)
-                .FirstOrDefault();
-            var project = _ormContext.ProjectsContext
-                .Where(p => p.UserId == user.Id)
-                .FirstOrDefault();
-            var objective = _ormContext.ObjectivesContext
-                .Where(o => o.ProjectId == project.Id)
-                .FirstOrDefault();
-            var criterionsRate = _ormContext.CriterionsComparableContext
-                .Where(c => c.ObjectiveId == objective.Id)
-                .ToList();
-
-            List<CriterionsComparableViewModels> criterionsComparableViewsModel 
-                = new List<CriterionsComparableViewModels>();
-
-            foreach(var c in criterionsRate)
-            {
-                var criterionsToCompare = _ormContext.CriterionsToCompareContext
-                    .Where(model => model.CriterionComparable.Id == c.Id)
-                    .ToList();
-
-                criterionsComparableViewsModel.Add(new CriterionsComparableViewModels
-                {
-                    Criterion1 = _ormContext.CriterionsContext
-                    .Where(model => model.Id == criterionsToCompare[0].Id)
-                    .FirstOrDefault(),
-                    Criterion2 = _ormContext.CriterionsContext
-                    .Where(model => model.Id == criterionsToCompare[1].Id)
-                    .FirstOrDefault(),
-                    Rate = c.Rate
-                });
-            }
-
             return View();
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public ActionResult Register(User user)
+        {
+            if (ModelState.IsValid && user != null)
+            {
+                if (_ormContext.UsersContext.Where(u => u.EmailAdress == user.EmailAdress).First() == null)
+                {
+                    _ormContext.UsersContext.Add(user);
+                    _ormContext.SaveChanges();
+                    return RedirectToAction("LogIn");
+                }
+                else
+                {
+                    ModelState.AddModelError("notUniqueEmail", "This email address already exist in data base");
+                    return View();
+                }
+            }
+            else
+            {
+                return View();
+            }
+        }
+
+        [AllowAnonymous]
+        public ActionResult LogIn()
+        {
+            return View();
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public ActionResult LogIn(User user)
+        {
+            var usr = _ormContext.UsersContext.Where(u => u.EmailAdress == user.EmailAdress && u.Password == user.Password).FirstOrDefault();
+            if (usr != null)
+            {
+                Session["User"] = usr;
+                return RedirectToAction("IndexProject", "Ahp");
+            }
+            else
+            {
+                ViewBag.Message = "Email or password is wrong!";
+            }
+            return View();
+        }
+
+
+        public ActionResult LogOut()
+        {
+            Session["User"] = null;
+            return RedirectToAction("LogIn", "LogIn");
+        }
+
+        public ActionResult LoggedIn()
+        {
+            if (Session["User"] != null)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("LogIn");
+            }
         }
     }
 }

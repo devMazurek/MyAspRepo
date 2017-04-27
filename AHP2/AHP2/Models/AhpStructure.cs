@@ -19,6 +19,7 @@ namespace AHP2.Models
         public virtual Project Project { set; get; }
         public virtual IEnumerable<Criterion> Criterions { set; get; }
         public virtual IEnumerable<CriterionsComparable> Comparables { set; get; }
+        public virtual IEnumerable<Alternativ> Alternatives { set; get; }
 
         [NotMapped]
         public int ProjectId { set; get; }
@@ -40,7 +41,6 @@ namespace AHP2.Models
     {
         [Required]
         public virtual Criterion Criterion { set; get; }
-        public virtual IEnumerable<Alternativ> Altrernatives { set; get; }
         public virtual IEnumerable<AlternativesComparable> Comparables { set; get; }
 
         [NotMapped]
@@ -50,7 +50,7 @@ namespace AHP2.Models
     public class Alternativ: AhpStructure
     {
         [Required]
-        public virtual SubCriterion SubCriterion { set; get; }
+        public virtual Objective Objective { set; get; }
 
         [NotMapped]
         public int SubCriterionId { set; get; }

@@ -1,0 +1,45 @@
+﻿@model AHP2.Models.User
+@{
+    ViewBag.Title = "LogIn";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    <div class="row">
+        <div class="col-md-offset-4 col-md-4">
+            <h2>Log in</h2>
+        </div>
+    </div>
+    <div class="row">
+        @if (ViewBag.Message != null)
+        {
+            <div class="col-md-12" style="font-size:small; color:red;">@ViewBag.Message</div>
+        }
+    </div>
+    <div class="row">
+        <div class="col-md-offset-3 col-md-6 well well-sm">
+            <div class="row form-group">
+                <div class="col-md-offset-3 col-md-3">
+                    @Html.LabelFor(u => u.EmailAdress)
+                </div>
+                <div class="col-md-3">
+                    @Html.TextBoxFor(u => u.EmailAdress)
+                </div>
+            </div>
+            <div class="row form-group" style="margin-top:15px;">
+                <div class="col-md-offset-3 col-md-3">
+                    @Html.LabelFor(u => u.Password)
+                </div>
+                <div class="col-md-3">
+                    @Html.PasswordFor(u => u.Password)
+                </div>
+            </div>
+            <div class="row">
+                <input class="btn btn-primary" type="submit" value="Sign in" />
+            </div>
+        </div>
+    </div>
+    <p>You dont have any Account? Click @Html.ActionLink("here", "Register")</p>
+}
+

@@ -8,7 +8,7 @@ using AHP2.Auth;
 
 namespace AHP2.Controllers
 {
-    [MyAuth]
+    
     public class BaseController : Controller
     {
         protected OrmContext _ormContext = new OrmContext(); 

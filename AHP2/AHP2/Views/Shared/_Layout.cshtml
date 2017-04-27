@@ -6,6 +6,7 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
 </head>
 <body>
@@ -22,10 +23,16 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    @if (Session["User"] != null)
+                    {
+
+                        <li>@Html.ActionLink("Log out", "LogOut", "User")</li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("Log in", "LogIn", "User")</li>
+                    }
                 </ul>
-                @Html.Partial("_LoginPartial")
             </div>
         </div>
     </div>
@@ -33,12 +40,15 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - My Simple AHP Application</p>
         </footer>
     </div>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+    <script>
+
+    </script>
 </body>
 </html>

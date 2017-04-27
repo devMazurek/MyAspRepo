@@ -21,4 +21,40 @@ input,
 select,
 textarea {
     max-width: 280px;
+    border-radius: 5px;
 }
+div,
+table,
+tr,
+th,
+td{
+    vertical-align:middle;
+    align-content:center;
+    text-align:center;
+}
+.well,
+.well-sm {
+    background-color:#fbfbfb;
+    border-radius:5px;
+}
+
+.btn-sm
+{
+    margin-bottom:0px;
+    margin-top:0px;
+    padding-bottom:2px;
+    padding-top:1px;
+}
+
+input[type=text]
+{
+    margin-bottom:5px;
+}
+
+#Nav 
+{
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+
