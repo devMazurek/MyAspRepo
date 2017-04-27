@@ -13,7 +13,14 @@
 <body>
     <div>
         <h1>Error</h1>
-         @Model.Exception.Message
+          @if (Model != null)
+          {
+            @Model.Exception.Message
+          }
+          else
+          {
+              <p>Not supported exception!</p>
+          }
     </div>
 </body>
 </html>

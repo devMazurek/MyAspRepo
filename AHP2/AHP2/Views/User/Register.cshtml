@@ -7,8 +7,12 @@
 
 @using (Html.BeginForm())
 {
-    @Html.ValidationSummary()
-
+    
+    <div class="row" style="margin-top:10px; color:green;">
+        <div class="col-md-offset-4 col-md-4">
+            @Html.ValidationSummary()
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-offset-4 col-md-4">
             <h2>Registration</h2>

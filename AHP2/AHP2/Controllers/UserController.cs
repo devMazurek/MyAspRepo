@@ -51,17 +51,28 @@ namespace AHP2.Controllers
         [HttpPost]
         public ActionResult LogIn(User user)
         {
-            var usr = _ormContext.UsersContext.Where(u => u.EmailAdress == user.EmailAdress && u.Password == user.Password).FirstOrDefault();
-            if (usr != null)
+            if(user != null)
             {
-                Session["User"] = usr;
-                return RedirectToAction("IndexProject", "Ahp");
+                var usr = _ormContext.UsersContext
+                    .Where(u => u.EmailAdress == user.EmailAdress && u.Password == user.Password)
+                    .FirstOrDefault();
+                if (usr != null)
+                {
+                    Session["User"] = usr;
+                    return RedirectToAction("Index", "Project");
+                }
+                else
+                {
+                    ViewBag.Message = "Email or password is wrong!";
+                }
+                return View();
             }
-            else
+
+            return new ViewResult
             {
-                ViewBag.Message = "Email or password is wrong!";
-            }
-            return View();
+                ViewName = "~/Views/Errors/Error.cshtml"
+            };
+
         }
 
 
