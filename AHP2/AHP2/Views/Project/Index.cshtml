@@ -1,4 +1,4 @@
-﻿@model IEnumerable<AHP2.Models.Project>
+﻿@model AHP2.Models.ProjectViewModels
 @{
     ViewBag.Title = "IndexProject";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -17,7 +17,7 @@
                     <th>Date</th>
                 </tr>
             </thead>
-            @foreach (var p in Model)
+            @foreach (var p in Model.Projects)
             {
                 <tbody>
                     <tr>
@@ -27,7 +27,7 @@
                 </tbody>
             }
         </table>
-        @Html.ActionLink("Create new", "CreateProject")
+        @Html.ActionLink("Create new", "Create", new { id = Model.User.Id })
     </div>
 </div>
 

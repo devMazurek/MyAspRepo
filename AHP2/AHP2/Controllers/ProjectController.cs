@@ -19,13 +19,47 @@ namespace AHP2.Controllers
             if (user != null)
             {    
                 var projects = _ormContext.ProjectsContext.Where(p => p.User.Id == user.Id).ToList();
-                return View(projects);
+                ProjectViewModels projectVM = new ProjectViewModels
+                {
+                    Projects = projects,
+                    User = user
+                };
+
+                return View(projectVM);
             }
 
             return new ViewResult
             {
                 ViewName = "~/Views/Errors/Error.cshtml",
             };
+        }
+
+        public ActionResult Create(int? userId)
+        {
+            if(userId != null)
+            {
+                var project = new Project();
+                project.UserId = (int)userId;
+                return View(project);
+            }
+
+            return new ViewResult
+            {
+                ViewName = "~/Views/Errors/Error.cshtml",
+            };
+        }
+
+        [HttpPost]
+        public ActionResult Create(Project project)
+        {
+            if(project != null)
+            {
+                project.User = _ormContext.UsersContext.Where(u => u.Id == project.UserId).FirstOrDefault();
+                _ormContext.ProjectsContext.Add(project);
+                _ormContext.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View();
         }
     }
 }
