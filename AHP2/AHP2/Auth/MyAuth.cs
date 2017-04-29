@@ -30,7 +30,7 @@ namespace AHP2.Auth
                 new System.Web.Routing.RouteValueDictionary(
                     new
                     {
-                        controller = "LogIn",
+                        controller = "User",
                         action = "LogIn"
                     }));
         }

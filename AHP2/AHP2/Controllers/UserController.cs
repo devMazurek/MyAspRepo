@@ -75,23 +75,10 @@ namespace AHP2.Controllers
 
         }
 
-
         public ActionResult LogOut()
         {
             Session["User"] = null;
             return RedirectToAction("LogIn", "LogIn");
-        }
-
-        public ActionResult LoggedIn()
-        {
-            if (Session["User"] != null)
-            {
-                return View();
-            }
-            else
-            {
-                return RedirectToAction("LogIn");
-            }
         }
     }
 }

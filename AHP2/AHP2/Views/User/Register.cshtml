@@ -9,7 +9,7 @@
 {
     
     <div class="row" style="margin-top:10px; color:green;">
-        <div class="col-md-offset-4 col-md-4">
+        <div class="col-md-offset-4 col-md-4 validationSummary">
             @Html.ValidationSummary()
         </div>
     </div>
@@ -56,3 +56,13 @@
         </div>
     </div>
 }
+<script>
+    $(document).ready(function () {
+        alert("a");
+        var list = $(".validationSummary").children();
+        var count = list.length;
+        for (i = 0; i < count; i++) {
+            $(list[i]).css('color', 'red');
+        }
+    })
+</script>
