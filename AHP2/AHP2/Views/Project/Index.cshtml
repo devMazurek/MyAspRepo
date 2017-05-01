@@ -21,13 +21,16 @@
             {
                 <tbody>
                     <tr>
-                        <td>@p.Name</td>
-                        <td>@p.CreateAt.ToShortDateString()</td>
+                        <td>@Html.ActionLink(p.Name, "Index", "Project")</td>
+                        <td>@Html.ActionLink(p.CreateAt.ToShortDateString(), "Index", "Project")</td>
                     </tr>
                 </tbody>
             }
         </table>
-        @Html.ActionLink("Create new", "Create", new { id = Model.User.Id })
+        <button class="btn btn-info">
+            @Html.ActionLink("Create new", "Create", new { id = Model.User.Id })
+        </button>
+       
     </div>
 </div>
 

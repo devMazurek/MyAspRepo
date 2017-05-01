@@ -34,12 +34,12 @@ namespace AHP2.Controllers
             };
         }
 
-        public ActionResult Create(int? userId)
+        public ActionResult Create(int? id)
         {
-            if(userId != null)
+            if(id != null)
             {
                 var project = new Project();
-                project.UserId = (int)userId;
+                project.UserId = (int)id;
                 return View(project);
             }
 
@@ -55,11 +55,29 @@ namespace AHP2.Controllers
             if(project != null)
             {
                 project.User = _ormContext.UsersContext.Where(u => u.Id == project.UserId).FirstOrDefault();
+                project.CreateAt = project.EditAt = DateTime.Now.Date;
                 _ormContext.ProjectsContext.Add(project);
                 _ormContext.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View();
+        }
+
+        public ActionResult Delete(int? id)
+        {
+            if(id != null)
+            {
+                var project = _ormContext.ProjectsContext.Where(p => p.Id == id).FirstOrDefault();
+                _ormContext.ProjectsContext.Remove(project);
+                _ormContext.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            HandleErrorInfo handleErrorInfo = new HandleErrorInfo(new Exception("Bad"), "Controller", "Action");
+            return new ViewResult
+            {
+                ViewName = "~/Views/Errors/Error.cshtml",
+                ViewData = new ViewDataDictionary(handleErrorInfo)
+            };
         }
     }
 }
