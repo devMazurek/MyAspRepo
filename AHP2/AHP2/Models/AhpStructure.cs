@@ -19,7 +19,6 @@ namespace AHP2.Models
         public virtual Project Project { set; get; }
         public virtual IEnumerable<Criterion> Criterions { set; get; }
         public virtual IEnumerable<CriterionsComparable> Comparables { set; get; }
-        public virtual IEnumerable<Alternativ> Alternatives { set; get; }
 
         [NotMapped]
         public int ProjectId { set; get; }
@@ -31,7 +30,8 @@ namespace AHP2.Models
         public virtual Objective Objective { set; get; }
         public virtual IEnumerable<SubCriterion> SubCriterions { set; get; }
         public virtual IEnumerable<SubCriterionsComparable> Comparables { set; get; }
-
+        public virtual IEnumerable<AlternativesComparable> AlternativComparables { set; get; }
+        public virtual ICollection<Alternativ> Alternatives { set; get; }
         [NotMapped]
         public int ObjectiveId { set; get; }
 
@@ -42,7 +42,7 @@ namespace AHP2.Models
         [Required]
         public virtual Criterion Criterion { set; get; }
         public virtual IEnumerable<AlternativesComparable> Comparables { set; get; }
-
+        public virtual ICollection<Alternativ> Alternatives { set; get; }
         [NotMapped]
         public int CriterionId { set; get; }
     }
@@ -50,10 +50,8 @@ namespace AHP2.Models
     public class Alternativ: AhpStructure
     {
         [Required]
-        public virtual Objective Objective { set; get; }
-
-        [NotMapped]
-        public int SubCriterionId { set; get; }
+        public virtual ICollection<SubCriterion> SubCriterions { set; get; }
+        public virtual ICollection<Criterion> Criterions { set; get; }
     }
 
     public abstract class Comparable
@@ -85,7 +83,7 @@ namespace AHP2.Models
     public class AlternativesComparable : Comparable
     {
         [Required]
-        public virtual SubCriterion SubCriterion { set; get; }
+        public virtual Objective SubCriterion { set; get; }
         public virtual IEnumerable<AlternativToCompare> AlternativesToComprae { set; get; }
 
         [NotMapped]

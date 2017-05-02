@@ -63,10 +63,6 @@ a:hover{
 }
 
 td a { 
-   display: block; 
-}
-
-a{
-    display:block;
-    color:black;
+   display: block;
+   color:black;
 }
