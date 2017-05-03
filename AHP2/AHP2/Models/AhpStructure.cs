@@ -49,7 +49,6 @@ namespace AHP2.Models
 
     public class Alternativ: AhpStructure
     {
-        [Required]
         public virtual ICollection<SubCriterion> SubCriterions { set; get; }
         public virtual ICollection<Criterion> Criterions { set; get; }
     }
@@ -99,6 +98,9 @@ namespace AHP2.Models
     {
         [Required]
         public CriterionsComparable CriterionComparable { set; get; }
+        public Criterion Criterion { set; get; }
+
+        [NotMapped]
         public int CriterionId { set; get; }
     }
 
@@ -106,6 +108,9 @@ namespace AHP2.Models
     {
         [Required]
         public SubCriterionsComparable SubCriterionComparable { set; get; }
+        public SubCriterion SubCriterion { set; get; }
+
+        [NotMapped]
         public int SubCriterionId { set; get; }
     }
 
@@ -113,6 +118,9 @@ namespace AHP2.Models
     {
         [Required]
         public AlternativesComparable AlternativesComparable { set; get; }
+        public Alternativ Alternativ { set; get; }
+
+        [NotMapped]
         public int AlternativId { set; get; }
     }
 

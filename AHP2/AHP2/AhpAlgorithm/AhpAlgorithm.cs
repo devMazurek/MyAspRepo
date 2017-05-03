@@ -53,6 +53,27 @@ namespace AHP2.AhpAlgorithm
 
             return stringArray;
         }*/
+        public List<CriterionsComparableViewModels> SelectComparable(List<Criterion> criterions)
+        {
+            List<CriterionsComparableViewModels> criterionsComparableVM = new List<CriterionsComparableViewModels>();
+            int n = criterions.Count;
+
+            for(int i = 0; i < n; i++)
+                for(int j = 0; j < n; j++)
+                {
+                    if(j > i)
+                    {
+                        criterionsComparableVM.Add(new CriterionsComparableViewModels
+                        {
+                            Criterion1 = criterions[i],
+                            Criterion2 = criterions[j],
+                            Rate = "1"
+                        });
+                    }
+                }
+            return criterionsComparableVM;
+        }
+
         public double[,] CriterionsComparableToDouble(List<CriterionsComparableViewModels> cCVMList)
         {
             int listComparables = cCVMList.Count;
