@@ -23,7 +23,8 @@ namespace AHP2.Controllers
         {
             if (ModelState.IsValid && user != null)
             {
-                if (_ormContext.UsersContext.Where(u => u.EmailAdress == user.EmailAdress).FirstOrDefault() == null)
+                if (_ormContext.UsersContext.Where(u => u.EmailAdress == user.EmailAdress)
+                    .FirstOrDefault() == null)
                 {
                     _ormContext.UsersContext.Add(user);
                     _ormContext.SaveChanges();

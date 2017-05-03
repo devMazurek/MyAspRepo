@@ -21,8 +21,9 @@
             {
                 <tbody>
                     <tr>
-                        <td>@Html.ActionLink(p.Name, "Index", "Project")</td>
-                        <td>@Html.ActionLink(p.CreateAt.ToShortDateString(), "Index", "Project")</td>
+                        <td>@Html.ActionLink(p.Name, "Index", new { id=p.Id })</td>
+                        <td>@Html.ActionLink(p.CreateAt.ToShortDateString(), "Index", new { id=p.Id})</td>
+                        <td>@Html.ActionLink("Delete", "Delete", new { id=p.Id}, new { @Class = "delete" })</td>
                     </tr>
                 </tbody>
             }
