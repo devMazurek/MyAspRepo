@@ -71,7 +71,11 @@ namespace AHP2.Controllers
             if(id != null)
             {
                 var project = _ormContext.ProjectsContext.Where(p => p.Id == id).FirstOrDefault();
+                var objectiv = _ormContext.ObjectivesContext.Where(o => o.Project.Id == project.Id).FirstOrDefault();
+                var alternatives = _ormContext.AlternativesContext.Where(a => a.ObjectiveId == objectiv.Id).ToList();
                 _ormContext.ProjectsContext.Remove(project);
+                if(alternatives.Count > 0)
+                    _ormContext.AlternativesContext.RemoveRange(alternatives);
                 _ormContext.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -85,127 +89,142 @@ namespace AHP2.Controllers
 
         private void CreateSampleAhpStructure(int id)
         {
-            Objective objective = _ormContext.ObjectivesContext.Add(new Objective
+            var project = _ormContext.ProjectsContext.Where(p => p.Id == id).FirstOrDefault();
+
+            var objective = _ormContext.ObjectivesContext.Add(new Objective
             {
-                Project = _ormContext.ProjectsContext.Where(p => p.Id == id).FirstOrDefault(),
-                Name = "My objective",
+                Project = project,
+                Name = "My objectiv"
             });
 
-            Criterion criterion_1 = _ormContext.CriterionsContext.Add(new Criterion
+            _ormContext.SaveChanges();
+
+            var criterions = _ormContext.CriterionsContext.AddRange(new List<Criterion>
             {
-                Name = "Criterion 1",
-                Objective = objective
-            });
-
-            Criterion criterion_2 = _ormContext.CriterionsContext.Add(new Criterion
-            {
-                Name = "Criterion 2",
-                Objective = objective
-            });
-
-            objective.Criterions = new List<Criterion>() { criterion_1, criterion_2 };
-
-            SubCriterion subCriterion_1_1 = _ormContext.SubCriterionsContext.Add(new SubCriterion
-            {
-                Name = "Subcriterion 1.1",
-                Criterion = criterion_1
-            });
-
-            SubCriterion subCriterion_1_2 = _ormContext.SubCriterionsContext.Add(new SubCriterion
-            {
-                Name = "Subcriterion 1.2",
-                Criterion = criterion_1
-            });
-
-            SubCriterion subCriterion_2_1 = _ormContext.SubCriterionsContext.Add(new SubCriterion
-            {
-                Name = "Subcriterion 2.1",
-                Criterion = criterion_2
-            });
-
-            SubCriterion subCriterion_2_2 = _ormContext.SubCriterionsContext.Add(new SubCriterion
-            {
-                Name = "Subcriterion 2.2",
-                Criterion = criterion_2
-            });
-
-            criterion_1.SubCriterions = new List<SubCriterion>() { subCriterion_1_1, subCriterion_1_2
-            , subCriterion_2_1, subCriterion_2_2};
-            criterion_2.SubCriterions = new List<SubCriterion>() { subCriterion_1_1, subCriterion_1_2
-            , subCriterion_2_1, subCriterion_2_2};
-
-            Alternativ alternative_1 = _ormContext.AlternativesContext.Add(new Alternativ
-            {
-                Name = "Alternativ 1",
-                Criterions = new List<Criterion>() { criterion_1, criterion_2 },
-                SubCriterions = new List<SubCriterion>() { subCriterion_1_1, subCriterion_1_2
-                , subCriterion_2_1, subCriterion_2_2}
-            });
-
-            Alternativ alternative_2 = _ormContext.AlternativesContext.Add(new Alternativ
-            {
-                Name = "Alternativ 2",
-                Criterions = new List<Criterion>() { criterion_1, criterion_2 },
-                SubCriterions = new List<SubCriterion>() { subCriterion_1_1, subCriterion_1_2
-                , subCriterion_2_1, subCriterion_2_2}
-            });
-
-            criterion_1.Alternatives = new List<Alternativ>() { alternative_1, alternative_2 };
-            criterion_2.Alternatives = new List<Alternativ>() { alternative_1, alternative_2 };
-
-            subCriterion_1_1.Alternatives = new List<Alternativ>() { alternative_1, alternative_2 };
-            subCriterion_1_2.Alternatives = new List<Alternativ>() { alternative_1, alternative_2 };
-            subCriterion_2_1.Alternatives = new List<Alternativ>() { alternative_1, alternative_2 };
-            subCriterion_2_2.Alternatives = new List<Alternativ>() { alternative_1, alternative_2 };
-
-            
-
-            AhpAlgorithm.AhpAlgorithm ahp = new AhpAlgorithm.AhpAlgorithm();
-
-            List<CriterionsComparableViewModels> criterionsComparableVM = ahp.SelectComparable(objective.Criterions.ToList());
-            List<CriterionsComparable> criterionsComparable = new List<CriterionsComparable>();
-            /*foreach (var c in criterionsComparableVM)
-            {
-                CriterionsComparable cc = new CriterionsComparable
-                {
-                    Rate = c.Rate,
-                    CriterionsToCompare = new List<CriterionToCompare>
-                    {
-                        new CriterionToCompare
-                        {
-                            CriterionId = c.Criterion1.Id
-                        }
-                    }
-                };
-            }*/
-
-            for(int i = 0; i < criterionsComparableVM.Count; i++)
-            {
-                CriterionsComparable cC = new CriterionsComparable
+                new Criterion
                 {
                     Objective = objective,
-                    Rate = criterionsComparableVM[i].Rate
-                };
-
-                var criterionToCompare_1 = new CriterionToCompare
+                    Name = "Criteerion 1"
+                },
+                new Criterion
                 {
-                    Criterion = criterion_1,
-                    CriterionComparable = cC
-                };
-                var criterionToCompare_2 = new CriterionToCompare
+                    Objective = objective,
+                    Name = "Criteerion 2"
+                }
+            }).ToList();
+
+            var subcriterions = _ormContext.SubCriterionsContext.AddRange(new List<SubCriterion>
+            {
+                new SubCriterion
                 {
-                    Criterion = criterion_2,
-                    CriterionComparable = cC
-                };
+                    Criterion = criterions[0],
+                    Name = "Subcriterion 1.1"
+                },
+                new SubCriterion
+                {
+                    Criterion = criterions[0],
+                    Name = "Subcriterion 1.2"
+                },
+                new SubCriterion
+                {
+                    Criterion = criterions[1],
+                    Name = "Subcriterion 2.1"
+                },
+                new SubCriterion
+                {
+                    Criterion = criterions[1],
+                    Name = "Subcriterion 2.2"
+                }
+            }).ToList();
 
+            var criterionComparable = _ormContext.CriterionRatingContext.AddRange(new List<CriterionRating>
+            {
+                 new CriterionRating
+                {
+                    Criterion = criterions[0],
+                    CriterionComparable = criterions[1],
+                    Rate = "1"
+                }
+        }).ToList();
 
-                cC.CriterionsToCompare = new List<CriterionToCompare>() { criterionToCompare_1, criterionToCompare_2};
+            var subCriterionComparables = _ormContext.SubCriterionRatingContext.AddRange(new List<SubCriterionRating>
+            {
+                new SubCriterionRating
+                {
+                    SubCriterion = subcriterions[0],
+                    SubCriterionComparable = subcriterions[1],
+                    Rate = "1"
+                },
+                new SubCriterionRating
+                {
+                    SubCriterion = subcriterions[2],
+                    SubCriterionComparable = subcriterions[3],
+                    Rate = "1"
+                }
+            }).ToList();
 
-                _ormContext.CriterionsComparableContext.Add(cC);
-                _ormContext.CriterionsToCompareContext.AddRange(new List<CriterionToCompare>() { criterionToCompare_1, criterionToCompare_2});
+            var alternatives = _ormContext.AlternativesContext.AddRange(new List<Alternativ>
+            {
+                new Alternativ
+                {
+                    ObjectiveId = _ormContext.ObjectivesContext.ToList().LastOrDefault().Id,
+                    Name = "Alternative 1"
+                },
+                new Alternativ
+                {
+                    ObjectiveId = _ormContext.ObjectivesContext.ToList().LastOrDefault().Id,
+                    Name = "Alternative 2"
+                }
+            }).ToList();
 
+            var alternativesToCriterion = _ormContext.AlternativToCriterionRatingContext.AddRange(new List<AlternativToCriterionRating>
+            {
+                new AlternativToCriterionRating
+                {
+                    Alternativ = alternatives[0],
+                    AlternativeComparable = alternatives[1],
+                    Criterion = criterions[0],
+                    Rate = "1"
+                },
+                new AlternativToCriterionRating
+                {
+                    Alternativ = alternatives[0],
+                    AlternativeComparable = alternatives[1],
+                    Criterion = criterions[1],
+                    Rate = "1"
+                }
+            }).ToList();
 
-            }
+            var alternativesToSubCriterion = _ormContext.AlternativToSubCriterionRatingContext.AddRange(new List<AlternativToSubCriterionRating> {
+                new AlternativToSubCriterionRating
+                {
+                    Alternativ = alternatives[0],
+                    AlternativeComparable = alternatives[1],
+                    SubCriterion = subcriterions[0],
+                    Rate = "1"
+                },
+                new AlternativToSubCriterionRating
+                {
+                    Alternativ = alternatives[0],
+                    AlternativeComparable = alternatives[1],
+                    SubCriterion = subcriterions[1],
+                    Rate = "1"
+                },
+                new AlternativToSubCriterionRating
+                {
+                    Alternativ = alternatives[0],
+                    AlternativeComparable = alternatives[1],
+                    SubCriterion = subcriterions[2],
+                    Rate = "1"
+                },
+                new AlternativToSubCriterionRating
+                {
+                    Alternativ = alternatives[0],
+                    AlternativeComparable = alternatives[1],
+                    SubCriterion = subcriterions[3],
+                    Rate = "1"
+                }
+            });
 
             _ormContext.SaveChanges();
         }

@@ -14,12 +14,10 @@ namespace AHP2.Models
         public DbSet<Criterion> CriterionsContext { set; get; }
         public DbSet<SubCriterion> SubCriterionsContext { set; get; }
         public DbSet<Alternativ> AlternativesContext { set; get; }
-        public DbSet<CriterionsComparable> CriterionsComparableContext { set; get; }
-        public DbSet<SubCriterionsComparable> SubCriterionsComparableContext { set; get; }
-        public DbSet<AlternativesComparable> AlternativesComparableContext { set; get; }
-        public DbSet<CriterionToCompare> CriterionsToCompareContext { set; get; } //without multi-path on delete cascade
-        public DbSet<SubCriterionToCompare> SubCriterionsToCompareContext { set; get; }
-        public DbSet<AlternativToCompare> AlternativesToCompareContext { set; get; }
+        public DbSet<CriterionRating> CriterionRatingContext { set; get; }
+        public DbSet<SubCriterionRating> SubCriterionRatingContext { set; get; }
+        public DbSet<AlternativToCriterionRating> AlternativToCriterionRatingContext { set; get; }
+        public DbSet<AlternativToSubCriterionRating> AlternativToSubCriterionRatingContext { set; get; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -28,7 +26,7 @@ namespace AHP2.Models
                 .HasRequired(p => p.User)
                 .WithMany()
                 .WillCascadeOnDelete(true);
-
+            
             modelBuilder.Entity<Objective>()
                 .HasRequired(o => o.Project)
                 .WithMany()

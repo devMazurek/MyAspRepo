@@ -18,7 +18,6 @@ namespace AHP2.Models
         [Required]
         public virtual Project Project { set; get; }
         public virtual IEnumerable<Criterion> Criterions { set; get; }
-        public virtual IEnumerable<CriterionsComparable> Comparables { set; get; }
 
         [NotMapped]
         public int ProjectId { set; get; }
@@ -29,9 +28,9 @@ namespace AHP2.Models
         [Required]
         public virtual Objective Objective { set; get; }
         public virtual IEnumerable<SubCriterion> SubCriterions { set; get; }
-        public virtual IEnumerable<SubCriterionsComparable> Comparables { set; get; }
-        public virtual IEnumerable<AlternativesComparable> AlternativComparables { set; get; }
-        public virtual ICollection<Alternativ> Alternatives { set; get; }
+        
+        public virtual IEnumerable<CriterionRating> CriterionRatings { set; get; } 
+
         [NotMapped]
         public int ObjectiveId { set; get; }
 
@@ -41,91 +40,73 @@ namespace AHP2.Models
     {
         [Required]
         public virtual Criterion Criterion { set; get; }
-        public virtual IEnumerable<AlternativesComparable> Comparables { set; get; }
-        public virtual ICollection<Alternativ> Alternatives { set; get; }
+
         [NotMapped]
         public int CriterionId { set; get; }
     }
 
     public class Alternativ: AhpStructure
     {
-        public virtual ICollection<SubCriterion> SubCriterions { set; get; }
-        public virtual ICollection<Criterion> Criterions { set; get; }
+        public int ObjectiveId { set; get; }// without reference
+
+        public virtual IEnumerable<AlternativToCriterionRating> AlternativToCriterionRating { set; get; }
+        public virtual IEnumerable<AlternativToCriterionRating> AlternativToSubCriterionRating { set; get; }
     }
 
-    public abstract class Comparable
+    public abstract class Rating
     {
         public int Id { set; get; }
         public string Rate { set; get; }
     }
 
-    public class CriterionsComparable: Comparable
+    public class CriterionRating: Rating
     {
         [Required]
-        public virtual Objective Objective { set; get; }
-        public virtual IEnumerable<CriterionToCompare> CriterionsToCompare { set; get; }
+        public Criterion Criterion { set; get; }
 
-        [NotMapped]
-        public int ObjectiveId { set; get; }
-    }
-
-    public class SubCriterionsComparable : Comparable
-    {
-        [Required]
-        public virtual Criterion Criterion { set; get; }
-        public virtual IEnumerable<SubCriterionToCompare> SubCriterionsToCompare { set; get; }
+        public Criterion CriterionComparable { set; get; }
 
         [NotMapped]
         public int CriterionId { set; get; }
     }
 
-    public class AlternativesComparable : Comparable
+    public class SubCriterionRating : Rating
     {
         [Required]
-        public virtual Objective SubCriterion { set; get; }
-        public virtual IEnumerable<AlternativToCompare> AlternativesToComprae { set; get; }
+        public SubCriterion SubCriterion { set; get; }
+
+        public SubCriterion SubCriterionComparable { set; get; }
 
         [NotMapped]
         public int SubCriterionId { set; get; }
     }
 
-    public abstract class AhpStructureToCompare
-    {
-        public int Id { set; get; }
-    }
-
-    public class CriterionToCompare:AhpStructureToCompare
+    public class AlternativToCriterionRating : Rating
     {
         [Required]
-        public CriterionsComparable CriterionComparable { set; get; }
-       
+        public Alternativ Alternativ { set; get;}
+
+        public Alternativ AlternativeComparable { set; get; }
+
+        [Required]
         public Criterion Criterion { set; get; }
 
         [NotMapped]
-        public int CriterionId { set; get; }
+        public int AlternativId { set; get; }
+
     }
 
-    public class SubCriterionToCompare:AhpStructureToCompare
+    public class AlternativToSubCriterionRating : Rating
     {
         [Required]
-        public SubCriterionsComparable SubCriterionComparable { set; get; }
-        
-        public SubCriterion SubCriterion { set; get; }
-
-        [NotMapped]
-        public int SubCriterionId { set; get; }
-    }
-
-    public class AlternativToCompare:AhpStructureToCompare
-    {
-        [Required]
-        public AlternativesComparable AlternativesComparable { set; get; }
-        
         public Alternativ Alternativ { set; get; }
+
+        public Alternativ AlternativeComparable { set; get; }
+
+        [Required]
+        public SubCriterion SubCriterion { set; get; }
 
         [NotMapped]
         public int AlternativId { set; get; }
     }
-
-
 }
