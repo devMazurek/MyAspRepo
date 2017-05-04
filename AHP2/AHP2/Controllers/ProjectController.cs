@@ -158,7 +158,7 @@ namespace AHP2.Controllers
             subCriterion_2_1.Alternatives = new List<Alternativ>() { alternative_1, alternative_2 };
             subCriterion_2_2.Alternatives = new List<Alternativ>() { alternative_1, alternative_2 };
 
-            _ormContext.SaveChanges();
+            
 
             AhpAlgorithm.AhpAlgorithm ahp = new AhpAlgorithm.AhpAlgorithm();
 
@@ -187,20 +187,27 @@ namespace AHP2.Controllers
                     Rate = criterionsComparableVM[i].Rate
                 };
 
-                List<CriterionToCompare> cTC = new List<CriterionToCompare>
+                var criterionToCompare_1 = new CriterionToCompare
                 {
-                    new CriterionToCompare
-                    {
-                        CriterionComparable = cC,
-                        Criterion = criterion_1
-                    },
-                    new CriterionToCompare
-                    {
-                        CriterionComparable = cC,
-                        Criterion = criterion_2
-                    }
+                    Criterion = criterion_1,
+                    CriterionComparable = cC
                 };
+                var criterionToCompare_2 = new CriterionToCompare
+                {
+                    Criterion = criterion_2,
+                    CriterionComparable = cC
+                };
+
+
+                cC.CriterionsToCompare = new List<CriterionToCompare>() { criterionToCompare_1, criterionToCompare_2};
+
+                _ormContext.CriterionsComparableContext.Add(cC);
+                _ormContext.CriterionsToCompareContext.AddRange(new List<CriterionToCompare>() { criterionToCompare_1, criterionToCompare_2});
+
+
             }
+
+            _ormContext.SaveChanges();
         }
     }
 }

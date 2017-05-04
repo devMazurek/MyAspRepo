@@ -98,6 +98,7 @@ namespace AHP2.Models
     {
         [Required]
         public CriterionsComparable CriterionComparable { set; get; }
+       
         public Criterion Criterion { set; get; }
 
         [NotMapped]
@@ -108,6 +109,7 @@ namespace AHP2.Models
     {
         [Required]
         public SubCriterionsComparable SubCriterionComparable { set; get; }
+        
         public SubCriterion SubCriterion { set; get; }
 
         [NotMapped]
@@ -118,6 +120,7 @@ namespace AHP2.Models
     {
         [Required]
         public AlternativesComparable AlternativesComparable { set; get; }
+        
         public Alternativ Alternativ { set; get; }
 
         [NotMapped]
