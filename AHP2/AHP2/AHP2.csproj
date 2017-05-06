@@ -204,6 +204,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ObjectiveController.cs" />
+    <Compile Include="Controllers\PartialMenuController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
@@ -214,7 +215,9 @@
     <Compile Include="Models\CriterionsComparableViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\ObjectiveViewModels.cs" />
     <Compile Include="Models\OrmContext.cs" />
+    <Compile Include="Models\PartialMenuViewModels.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\ProjectViewModels.cs" />
     <Compile Include="Models\User.cs" />
@@ -286,11 +289,13 @@
     <Content Include="Views\User\Register.cshtml" />
     <Content Include="Views\Project\Index.cshtml" />
     <Content Include="Views\Project\Create.cshtml" />
+    <Content Include="Views\Shared\_PartialMenu.cshtml" />
+    <Content Include="Views\Objective\Update.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Base\" />
-    <Folder Include="Views\Objective\" />
+    <Folder Include="Views\PartialMenu\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

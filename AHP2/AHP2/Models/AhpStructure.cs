@@ -41,6 +41,8 @@ namespace AHP2.Models
         [Required]
         public virtual Criterion Criterion { set; get; }
 
+        public virtual IEnumerable<SubCriterionRating> SubCriterionRatings { set; get; }
+
         [NotMapped]
         public int CriterionId { set; get; }
     }

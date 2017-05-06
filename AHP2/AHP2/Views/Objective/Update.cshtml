@@ -1,0 +1,16 @@
+﻿@model AHP2.Models.ObjectiveViewModels
+
+@{
+    ViewBag.Title = "Update";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Model.PartialMenuViewModels.GetNameMenuItem(Model.PartialMenuViewModels.MenuItem)</h2>
+
+<div class="row">
+    <div class="col-md-4">
+        @Html.Partial("_PartialMenu", Model.PartialMenuViewModels)
+    </div>
+</div>
+
+
