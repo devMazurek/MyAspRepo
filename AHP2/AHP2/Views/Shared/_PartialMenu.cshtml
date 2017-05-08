@@ -12,12 +12,12 @@
                 @if(e == Model.MenuItem)
                 {
                     @Html.ActionLink(@Model.GetNameMenuItem(e), "Diverter", "PartialMenu"
-              , new { id = (int)Model.MenuItem + "-" + Model.ObjectRoueting}, htmlAttributes: new object { })
+              , new { id = (int)e + "-" + Model.ObjectRouting}, htmlAttributes: new object { })
                 }
                 else
                 {
                     @Html.ActionLink(@Model.GetNameMenuItem(e), "Diverter", "PartialMenu"
-               , routeValues: new int[] { (int)Model.MenuItem, Model.ObjectRoueting }, htmlAttributes: new object { })
+               , new { id = (int)e + "-" + Model.ObjectRouting }, htmlAttributes: new object { })
                 }
 
             </td>

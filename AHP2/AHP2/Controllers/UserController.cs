@@ -79,7 +79,7 @@ namespace AHP2.Controllers
         public ActionResult LogOut()
         {
             Session["User"] = null;
-            return RedirectToAction("LogIn", "LogIn");
+            return RedirectToAction("LogIn", "User");
         }
     }
 }

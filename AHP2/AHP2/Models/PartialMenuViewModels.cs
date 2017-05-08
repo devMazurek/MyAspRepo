@@ -21,7 +21,7 @@ namespace AHP2.Models
     public class PartialMenuViewModels
     {
         public MenuItem MenuItem { set; get; }  
-        public int  ObjectRoueting { set; get; }
+        public int  ObjectRouting { set; get; }
         
         public PartialMenuViewModels()
         {
@@ -45,7 +45,7 @@ namespace AHP2.Models
                 case MenuItem.Alternatives: return "Alternatives";
                 case MenuItem.AlternativesToCriterionsRating: return "Comparision of criteria - alternatives";
                 case MenuItem.AlternativesToSubCriterionsRating: return "Comparision of sub-criteria - alternatives";
-                case MenuItem.Summary: return "Summamry";
+                case MenuItem.Summary: return "Summary";
                 default: return "";
             }
         }

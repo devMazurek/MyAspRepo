@@ -201,6 +201,7 @@
     <Compile Include="Auth\MyAuth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\CriterionController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ObjectiveController.cs" />
@@ -213,6 +214,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AhpStructure.cs" />
     <Compile Include="Models\CriterionsComparableViewModels.cs" />
+    <Compile Include="Models\CriterionViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\ObjectiveViewModels.cs" />
@@ -291,6 +293,7 @@
     <Content Include="Views\Project\Create.cshtml" />
     <Content Include="Views\Shared\_PartialMenu.cshtml" />
     <Content Include="Views\Objective\Update.cshtml" />
+    <Content Include="Views\Criterion\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

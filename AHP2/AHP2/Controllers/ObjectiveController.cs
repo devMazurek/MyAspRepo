@@ -7,7 +7,7 @@ using AHP2.Models;
 
 namespace AHP2.Controllers
 {
-    public class ObjectiveController : Controller
+    public class ObjectiveController : BaseController
     {
         // GET: Objective
         public ActionResult Update(int? id)
@@ -16,14 +16,11 @@ namespace AHP2.Controllers
             {
                 var objectiveVM = new ObjectiveViewModels
                 {
-                    Objective = new Objective()
-                    {
-                        ProjectId = (int)id
-                    },
+                    Objective = _ormContext.ObjectivesContext.Where(o => o.Project.Id == (int)id).FirstOrDefault(),
                     PartialMenuViewModels = new PartialMenuViewModels
                     {
                         MenuItem = MenuItem.Objective,
-                        ObjectRoueting = (int)id
+                        ObjectRouting = (int)id
                     }
                 };
 
@@ -39,7 +36,20 @@ namespace AHP2.Controllers
         [HttpPost]
         public ActionResult Update(ObjectiveViewModels objectiveVM)
         {
-            return View();
+
+            if(objectiveVM != null)
+            {
+                var objective = _ormContext.ObjectivesContext.Where(o => o.Id == objectiveVM.Objective.Id)
+                    .FirstOrDefault();
+                objective.Name = objectiveVM.Objective.Name;
+                _ormContext.SaveChanges();
+                return RedirectToAction("Index", "Criterion", new { id = objectiveVM.Objective.Id});
+            }
+
+            return new ViewResult
+            {
+                ViewName = "~/Views/Errors/Error.cshtml",
+            };
         }
     }
 }

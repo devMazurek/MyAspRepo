@@ -70,3 +70,9 @@ td a {
 a.delete:hover{
     color:blue;
 }
+
+div{
+    border-style:solid;
+    border-width:medium;
+    border-bottom-color:red;
+}

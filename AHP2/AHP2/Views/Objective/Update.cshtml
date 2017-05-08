@@ -11,6 +11,27 @@
     <div class="col-md-4">
         @Html.Partial("_PartialMenu", Model.PartialMenuViewModels)
     </div>
+    <div class="col-md-6">
+        @using (Html.BeginForm())
+        {
+        <div class="row">
+            <div class="col-md-offset-1 col-md-10 well well-sm">
+                <div class="row form-group">
+                    <div class="col-md-6">
+                        @Html.LabelFor(o => o.Objective.Name)
+                    </div>
+                    <div class="col-md-6">
+                        @Html.TextBoxFor(o => o.Objective.Name)
+                    </div>
+                    @Html.HiddenFor(o => o.Objective.Id, new {@Value = Model.Objective.Id })
+                </div>
+                <div class="row">
+                    <input class="btn btn-primary" type="submit" value="Next" />
+                </div>
+            </div>
+        </div>
+        }
+    </div>
 </div>
 
 
