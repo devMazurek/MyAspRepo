@@ -64,8 +64,8 @@ namespace AHP2.Models
     public class CriterionRating: Rating
     {
         [Required]
-        public Criterion Criterion { set; get; }
-
+        public virtual Criterion Criterion { set; get; }
+        
         public Criterion CriterionComparable { set; get; }
 
         [NotMapped]
@@ -75,7 +75,7 @@ namespace AHP2.Models
     public class SubCriterionRating : Rating
     {
         [Required]
-        public SubCriterion SubCriterion { set; get; }
+        public virtual SubCriterion SubCriterion { set; get; }
 
         public SubCriterion SubCriterionComparable { set; get; }
 

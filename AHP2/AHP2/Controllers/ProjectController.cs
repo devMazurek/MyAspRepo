@@ -104,12 +104,12 @@ namespace AHP2.Controllers
                 new Criterion
                 {
                     Objective = objective,
-                    Name = "Criteerion 1"
+                    Name = "Criterion 1"
                 },
                 new Criterion
                 {
                     Objective = objective,
-                    Name = "Criteerion 2"
+                    Name = "Criterion 2"
                 }
             }).ToList();
 
@@ -153,6 +153,30 @@ namespace AHP2.Controllers
                 {
                     SubCriterion = subcriterions[0],
                     SubCriterionComparable = subcriterions[1],
+                    Rate = "1"
+                },
+                new SubCriterionRating
+                {
+                    SubCriterion = subcriterions[0],
+                    SubCriterionComparable = subcriterions[2],
+                    Rate = "1"
+                },
+                new SubCriterionRating
+                {
+                    SubCriterion = subcriterions[0],
+                    SubCriterionComparable = subcriterions[3],
+                    Rate = "1"
+                },
+                new SubCriterionRating
+                {
+                    SubCriterion = subcriterions[1],
+                    SubCriterionComparable = subcriterions[2],
+                    Rate = "1"
+                },
+                new SubCriterionRating
+                {
+                    SubCriterion = subcriterions[1],
+                    SubCriterionComparable = subcriterions[3],
                     Rate = "1"
                 },
                 new SubCriterionRating

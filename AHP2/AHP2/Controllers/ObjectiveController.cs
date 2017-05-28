@@ -4,9 +4,11 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using AHP2.Models;
+using AHP2.Auth;
 
 namespace AHP2.Controllers
 {
+    [MyAuth]
     public class ObjectiveController : BaseController
     {
         // GET: Objective
@@ -39,13 +41,12 @@ namespace AHP2.Controllers
 
             if(objectiveVM != null)
             {
-                var objective = _ormContext.ObjectivesContext.Where(o => o.Id == objectiveVM.Objective.Id)
+                    var objective = _ormContext.ObjectivesContext.Include("Project").Where(o => o.Id == objectiveVM.Objective.Id)
                     .FirstOrDefault();
-                objective.Name = objectiveVM.Objective.Name;
-                _ormContext.SaveChanges();
-                return RedirectToAction("Index", "Criterion", new { id = objectiveVM.Objective.Id});
+                    objective.Name = objectiveVM.Objective.Name;
+                    _ormContext.SaveChanges();
+                    return RedirectToAction("Index", "Criterion", new { id = objectiveVM.Objective.Id });
             }
-
             return new ViewResult
             {
                 ViewName = "~/Views/Errors/Error.cshtml",

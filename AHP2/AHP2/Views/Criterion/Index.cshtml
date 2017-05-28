@@ -7,12 +7,126 @@
 
 <h2>@Model.PartialMenuViewModels.GetNameMenuItem(Model.PartialMenuViewModels.MenuItem)</h2>
 
+@using (Html.BeginForm())
+{
 <div class="row">
     <div class="col-md-4">
         @Html.Partial("_PartialMenu", Model.PartialMenuViewModels)
     </div>
     <div class="col-md-6">
-      
-    </div>
+        <div class="col-md-offset-1 col-md-10 well well-sm">
+            <div id="criterions">
+            
+                @for (int i = 0; i < Model.Criterions.Count; i++)
+                {
+                        <div class="row form-group">
+                            <div class="col-md-4">
+                                <label>Criterion @(i + 1)</label>
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(c => c.Criterions[i].Name)
+                            </div>
+                            <div class="col-md-4">
+                                <input id='btnDelete_" + @(i + 1) + "' class='btn btn-danger btn-sm' type='button' value='Delete' />
+                            </div>
+                            @Html.HiddenFor(c => c.Criterions[i].Id, new { @Value = Model.Criterions[i].Id })
+                        </div>
+                    }
+                    @Html.HiddenFor(c => c.Objective.Id, new { @Value = Model.Objective.Id })
+            </div>
+           
+            <div class="row">
+                <button id='btnAdd' type='button' class='btn btn-default btn-sm'>
+                    <span class='glyphicon glyphicon-plus'></span>
+                </button>
+            </div>
+            <div class="row">
+                <input class="btn btn-primary" type="submit" value="Next" />
+            </div>
+        </div>
+        </div>
 </div>
+}
+<script>
+    $(document).click(function (e) {
+        if ($(e.target).attr('id') == 'btnAdd') {
+            if ($(":text").length < 10) {
+                InsertTextBox();
+            }
+        }
+        else if (($(e.target).attr('value') == 'Delete')) {
+            if ($(":text").length > 2) {
+                var c = $(e.target).attr('id').split('_')[1];
+                var parent = $(e.target).parent().parent();
+                var h = $(e.target).parent().siblings().get(2);
+                var hId = $(h).val();
+                //alert(hId);
+                //ajaxDelete(hId);
+                parent.remove();
+
+                var criterions = $(':text');
+                
+                for (i = 0; i < criterions.length; i++) {
+                    var tmp = $(criterions[i]).val();
+                    var hidden = $(criterions[i]).parent().siblings().get(2);
+                    var hiddenId = $(hidden).val();
+                    $(criterions[i]).parent().parent().remove();
+                    var html = AddTextBox(i, tmp, hiddenId);
+                    $("#criterions").append(html);
+                }
+            }
+            else if ($("p").length < 2) {
+                var h = $($("h2")[0]);
+                h.after("<p style='color:red;'>Minimal count of criterions is 2</p>");
+            }
+        }
+    });
+
+    function InsertTextBox() {
+        var lastObj = $(GetLastCriterion());
+        var i = $(lastObj).attr("id").split("_")[1];
+        var html = AddTextBox(parseInt(i) + 1);
+        $($(lastObj.parent().get(0)).parent().get(0)).after(html);
+    }
+
+    function GetLastCriterion() {
+        var obj = $(":text");
+        return obj[obj.length - 1];
+    }
+
+    function AddTextBox(i, value, id) {
+        if (value == null)
+            value = "";
+        if (id == null)
+            id = 0;
+        if ($("p").length > 1 && $("p").length < 10) {
+            $("p")[0].remove();
+        }
+
+        var criterionId = "Criterions_" + i + "_Name";
+        var criterionName = "Criterions[" + i + "].Name";
+        var html = " <div class='row form-group'><div class='col-md-4'><label for='"
+            + criterionId + "'>Criterion " + (i + 1) + "</label></div>" +
+            "<div class='col-md-4'><input id='" + criterionId + "' type='text' value='" + value + "' name='"
+            + criterionName + "'></input></div><div class='col-md-4'>" +
+            "<input id='btnDelete_" + i + "' class='btn btn-danger btn-sm' type='button'  value='Delete'/></div>" +
+            "<input value='" + id + "' type='hidden' id='Criterions_" + i + "_Id' name='Criterions[" + i + "].Id'></div>";
+        return html;
+    }
+
+    //function ajaxDelete(criterionId) {
+      //  $.ajax({
+        //    type: "post",
+          //  url: "@Url.Action("Delete", "Criterion")",
+            //data: { id: criterionId },
+            //ajaxsync: true,
+            //success: function () {
+            //    alert("success!");
+            //},
+            //error: function (data) {
+                //alert("fail");
+            //}
+            //});
+   //}
+</script>
 

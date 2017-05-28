@@ -4,9 +4,11 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using AHP2.Models;
+using AHP2.Auth;
 
 namespace AHP2.Controllers
 {
+    [MyAuth]
     public class CriterionController : BaseController
     {
         // GET: Criterion
@@ -37,8 +39,9 @@ namespace AHP2.Controllers
         [HttpPost]
         public ActionResult Index(CriterionViewModel criterionVM)
         {
-            if(criterionVM != null)
+            if(criterionVM.Criterions != null)
             {
+                DeleteCriterions(criterionVM.Objective, criterionVM.Criterions);
                 foreach (var criterion in criterionVM.Criterions)
                 {
                     if (IsExisting(criterion.Id))
@@ -51,6 +54,10 @@ namespace AHP2.Controllers
                         Create(criterion);
                     }      
                 }
+
+                UpdateRatings(_ormContext.CriterionsContext
+                    .Where(c => c.Objective.Id == criterionVM.Objective.Id)
+                    .ToList());
 
                 return RedirectToAction("Index", "SubCriterion");
             }
@@ -90,12 +97,14 @@ namespace AHP2.Controllers
             }
         }
 
-        public ActionResult Delete(Criterion criterion)
+        /*
+        [HttpPost, ActionName("Delete")]
+        public ActionResult Delete(int? id)
         {
-            if (criterion != null)
+            if (id != null || id != 0)
             {
-                var c = _ormContext.CriterionsContext.Where(cr => cr.Id == criterion.Id).FirstOrDefault();
-                _ormContext.CriterionsContext.Remove(c);
+                var criterion = _ormContext.CriterionsContext.Where(c => c.Id == id).FirstOrDefault();
+                _ormContext.CriterionsContext.Remove(criterion);
                 _ormContext.SaveChanges();
             }
             return new ViewResult
@@ -103,7 +112,7 @@ namespace AHP2.Controllers
                 ViewName = "~/Views/Errors/Error.cshtml",
             };
 
-        }
+        }*/
 
         private bool IsExisting(int id)
         {
@@ -111,6 +120,56 @@ namespace AHP2.Controllers
                 return true;
             else return false;
             
+        }
+
+        private void DeleteCriterions(Objective objective, List<Criterion> criterions)
+        {
+            var objectiveId = objective.Id;
+            var oryginalCriterions = _ormContext.CriterionsContext
+                .Where(c => c.Objective.Id == objectiveId)
+                .ToList();
+            foreach(var c in oryginalCriterions)
+            {
+                if(IsToDelete(criterions, c))
+                {
+                    var toDelete = oryginalCriterions
+                        .Where(cr => cr.Id == c.Id)
+                        .FirstOrDefault();
+                    DeleteRatingCriterion(toDelete);
+                    _ormContext.CriterionsContext.Remove(toDelete);
+                    _ormContext.SaveChanges();
+                }
+            }
+        }
+
+        private bool IsToDelete(List<Criterion> criterions, Criterion originalCriterion)
+        {
+            foreach(var c in criterions)
+            {
+                if (c.Id == originalCriterion.Id || originalCriterion.Id == 0)
+                    return false;
+            }
+
+            return true;
+        }
+
+        private void DeleteRatingCriterion(Criterion criterion)
+        {
+            var criterionsRating = _ormContext.CriterionRatingContext.Where(cr => cr.CriterionComparable.Id == criterion.Id).ToList();
+            _ormContext.CriterionRatingContext.RemoveRange(criterionsRating);
+            _ormContext.SaveChanges();
+        }
+
+        private void UpdateRatings(List<Criterion> criterions)
+        {
+            AhpAlgorithm.AhpAlgorithm ahp = new AhpAlgorithm.AhpAlgorithm();
+
+            var comparableList = ahp.SelectComparable(criterions);
+
+            foreach(var comparable in comparableList)
+            {
+                
+            }
         }
     }
 }
