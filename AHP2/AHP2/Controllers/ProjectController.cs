@@ -60,13 +60,12 @@ namespace AHP2.Controllers
                 _ormContext.ProjectsContext.Add(project);
                 _ormContext.SaveChanges();
                 var lastId = _ormContext.ProjectsContext.ToList().LastOrDefault().Id;
-                CreateSampleAhpStructure(lastId);
                 return RedirectToAction("Index");
             }
             return View();
         }
 
-        public ActionResult Delete(int? id)
+        /*public ActionResult Delete(int? id)
         {
             if(id != null)
             {
@@ -85,172 +84,6 @@ namespace AHP2.Controllers
                 ViewName = "~/Views/Errors/Error.cshtml",
                 ViewData = new ViewDataDictionary(handleErrorInfo)
             };
-        }
-
-        private void CreateSampleAhpStructure(int id)
-        {
-            var project = _ormContext.ProjectsContext.Where(p => p.Id == id).FirstOrDefault();
-
-            var objective = _ormContext.ObjectivesContext.Add(new Objective
-            {
-                Project = project,
-                Name = "My objectiv"
-            });
-
-            _ormContext.SaveChanges();
-
-            var criterions = _ormContext.CriterionsContext.AddRange(new List<Criterion>
-            {
-                new Criterion
-                {
-                    Objective = objective,
-                    Name = "Criterion 1"
-                },
-                new Criterion
-                {
-                    Objective = objective,
-                    Name = "Criterion 2"
-                }
-            }).ToList();
-
-            var subcriterions = _ormContext.SubCriterionsContext.AddRange(new List<SubCriterion>
-            {
-                new SubCriterion
-                {
-                    Criterion = criterions[0],
-                    Name = "Subcriterion 1.1"
-                },
-                new SubCriterion
-                {
-                    Criterion = criterions[0],
-                    Name = "Subcriterion 1.2"
-                },
-                new SubCriterion
-                {
-                    Criterion = criterions[1],
-                    Name = "Subcriterion 2.1"
-                },
-                new SubCriterion
-                {
-                    Criterion = criterions[1],
-                    Name = "Subcriterion 2.2"
-                }
-            }).ToList();
-
-            var criterionComparable = _ormContext.CriterionRatingContext.AddRange(new List<CriterionRating>
-            {
-                 new CriterionRating
-                {
-                    Criterion = criterions[0],
-                    CriterionComparable = criterions[1],
-                    Rate = "1"
-                }
-        }).ToList();
-
-            var subCriterionComparables = _ormContext.SubCriterionRatingContext.AddRange(new List<SubCriterionRating>
-            {
-                new SubCriterionRating
-                {
-                    SubCriterion = subcriterions[0],
-                    SubCriterionComparable = subcriterions[1],
-                    Rate = "1"
-                },
-                new SubCriterionRating
-                {
-                    SubCriterion = subcriterions[0],
-                    SubCriterionComparable = subcriterions[2],
-                    Rate = "1"
-                },
-                new SubCriterionRating
-                {
-                    SubCriterion = subcriterions[0],
-                    SubCriterionComparable = subcriterions[3],
-                    Rate = "1"
-                },
-                new SubCriterionRating
-                {
-                    SubCriterion = subcriterions[1],
-                    SubCriterionComparable = subcriterions[2],
-                    Rate = "1"
-                },
-                new SubCriterionRating
-                {
-                    SubCriterion = subcriterions[1],
-                    SubCriterionComparable = subcriterions[3],
-                    Rate = "1"
-                },
-                new SubCriterionRating
-                {
-                    SubCriterion = subcriterions[2],
-                    SubCriterionComparable = subcriterions[3],
-                    Rate = "1"
-                }
-            }).ToList();
-
-            var alternatives = _ormContext.AlternativesContext.AddRange(new List<Alternativ>
-            {
-                new Alternativ
-                {
-                    ObjectiveId = _ormContext.ObjectivesContext.ToList().LastOrDefault().Id,
-                    Name = "Alternative 1"
-                },
-                new Alternativ
-                {
-                    ObjectiveId = _ormContext.ObjectivesContext.ToList().LastOrDefault().Id,
-                    Name = "Alternative 2"
-                }
-            }).ToList();
-
-            var alternativesToCriterion = _ormContext.AlternativToCriterionRatingContext.AddRange(new List<AlternativToCriterionRating>
-            {
-                new AlternativToCriterionRating
-                {
-                    Alternativ = alternatives[0],
-                    AlternativeComparable = alternatives[1],
-                    Criterion = criterions[0],
-                    Rate = "1"
-                },
-                new AlternativToCriterionRating
-                {
-                    Alternativ = alternatives[0],
-                    AlternativeComparable = alternatives[1],
-                    Criterion = criterions[1],
-                    Rate = "1"
-                }
-            }).ToList();
-
-            var alternativesToSubCriterion = _ormContext.AlternativToSubCriterionRatingContext.AddRange(new List<AlternativToSubCriterionRating> {
-                new AlternativToSubCriterionRating
-                {
-                    Alternativ = alternatives[0],
-                    AlternativeComparable = alternatives[1],
-                    SubCriterion = subcriterions[0],
-                    Rate = "1"
-                },
-                new AlternativToSubCriterionRating
-                {
-                    Alternativ = alternatives[0],
-                    AlternativeComparable = alternatives[1],
-                    SubCriterion = subcriterions[1],
-                    Rate = "1"
-                },
-                new AlternativToSubCriterionRating
-                {
-                    Alternativ = alternatives[0],
-                    AlternativeComparable = alternatives[1],
-                    SubCriterion = subcriterions[2],
-                    Rate = "1"
-                },
-                new AlternativToSubCriterionRating
-                {
-                    Alternativ = alternatives[0],
-                    AlternativeComparable = alternatives[1],
-                    SubCriterion = subcriterions[3],
-                    Rate = "1"
-                }
-            });
-
-            _ormContext.SaveChanges();
-        }
+        }   */
     }
 }

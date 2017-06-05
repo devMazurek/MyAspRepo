@@ -15,7 +15,6 @@ namespace AHP2.Models
 
     public class Objective: AhpStructure
     {
-        [Required]
         public virtual Project Project { set; get; }
         public virtual IEnumerable<Criterion> Criterions { set; get; }
 
@@ -25,7 +24,6 @@ namespace AHP2.Models
 
     public class Criterion: AhpStructure
     {
-        [Required]
         public virtual Objective Objective { set; get; }
         public virtual IEnumerable<SubCriterion> SubCriterions { set; get; }
         
@@ -38,7 +36,6 @@ namespace AHP2.Models
 
     public class SubCriterion: AhpStructure
     {
-        [Required]
         public virtual Criterion Criterion { set; get; }
 
         public virtual IEnumerable<SubCriterionRating> SubCriterionRatings { set; get; }
@@ -49,7 +46,7 @@ namespace AHP2.Models
 
     public class Alternativ: AhpStructure
     {
-        public int ObjectiveId { set; get; }// without reference
+        public virtual Objective Objective { set; get; }// without reference
 
         public virtual IEnumerable<AlternativToCriterionRating> AlternativToCriterionRating { set; get; }
         public virtual IEnumerable<AlternativToCriterionRating> AlternativToSubCriterionRating { set; get; }
@@ -63,7 +60,6 @@ namespace AHP2.Models
 
     public class CriterionRating: Rating
     {
-        [Required]
         public virtual Criterion Criterion { set; get; }
         
         public Criterion CriterionComparable { set; get; }
@@ -74,7 +70,6 @@ namespace AHP2.Models
 
     public class SubCriterionRating : Rating
     {
-        [Required]
         public virtual SubCriterion SubCriterion { set; get; }
 
         public SubCriterion SubCriterionComparable { set; get; }
@@ -85,12 +80,10 @@ namespace AHP2.Models
 
     public class AlternativToCriterionRating : Rating
     {
-        [Required]
         public Alternativ Alternativ { set; get;}
 
         public Alternativ AlternativeComparable { set; get; }
 
-        [Required]
         public Criterion Criterion { set; get; }
 
         [NotMapped]
@@ -100,12 +93,10 @@ namespace AHP2.Models
 
     public class AlternativToSubCriterionRating : Rating
     {
-        [Required]
         public Alternativ Alternativ { set; get; }
 
         public Alternativ AlternativeComparable { set; get; }
 
-        [Required]
         public SubCriterion SubCriterion { set; get; }
 
         [NotMapped]

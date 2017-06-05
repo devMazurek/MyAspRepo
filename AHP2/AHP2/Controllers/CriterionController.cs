@@ -135,7 +135,6 @@ namespace AHP2.Controllers
                     var toDelete = oryginalCriterions
                         .Where(cr => cr.Id == c.Id)
                         .FirstOrDefault();
-                    DeleteRatingCriterion(toDelete);
                     _ormContext.CriterionsContext.Remove(toDelete);
                     _ormContext.SaveChanges();
                 }
@@ -153,13 +152,6 @@ namespace AHP2.Controllers
             return true;
         }
 
-        private void DeleteRatingCriterion(Criterion criterion)
-        {
-            var criterionsRating = _ormContext.CriterionRatingContext.Where(cr => cr.CriterionComparable.Id == criterion.Id).ToList();
-            _ormContext.CriterionRatingContext.RemoveRange(criterionsRating);
-            _ormContext.SaveChanges();
-        }
-
         private void UpdateRatings(List<Criterion> criterions)
         {
             AhpAlgorithm.AhpAlgorithm ahp = new AhpAlgorithm.AhpAlgorithm();
@@ -168,8 +160,24 @@ namespace AHP2.Controllers
 
             foreach(var comparable in comparableList)
             {
-                
+                var cmp = _ormContext.CriterionRatingContext
+                    .Where(cr => cr.Criterion.Id == comparable.Criterion1.Id
+                    && cr.CriterionComparable.Id == comparable.Criterion2.Id).FirstOrDefault();
+                if (cmp == null)
+                {
+                    var criterionRating = _ormContext.CriterionRatingContext.Add(new CriterionRating
+                    {
+                        Criterion = _ormContext.CriterionsContext
+                       .Where(c => c.Id == comparable.Criterion1.Id)
+                       .FirstOrDefault(),
+                        CriterionComparable = _ormContext.CriterionsContext
+                       .Where(c => c.Id == comparable.Criterion2.Id)
+                       .FirstOrDefault(),
+                        Rate = "1"
+                    });
+                }
             }
+            _ormContext.SaveChanges();
         }
     }
 }

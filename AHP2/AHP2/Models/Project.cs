@@ -15,7 +15,6 @@ namespace AHP2.Models
         public DateTime CreateAt { set; get; }
         public DateTime EditAt { set; get; }
 
-        [Required]
         public virtual User User { set; get; }
 
         [NotMapped]
