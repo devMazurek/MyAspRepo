@@ -162,3 +162,5 @@ C:\Users\Mazurek\Source\Repos\NewRepo2\AHP2\AHP2\bin\Microsoft.Owin.Security.Mic
 C:\Users\Mazurek\Source\Repos\NewRepo2\AHP2\AHP2\obj\Debug\AHP2.csprojResolveAssemblyReference.cache
 C:\Users\Mazurek\Source\Repos\NewRepo2\AHP2\AHP2\obj\Debug\AHP2.dll
 C:\Users\Mazurek\Source\Repos\NewRepo2\AHP2\AHP2\obj\Debug\AHP2.pdb
+C:\Users\Mazurek\Source\Repos\NewRepo2\AHP2\AHP2\bin\AHP2.dll.CodeAnalysisLog.xml
+C:\Users\Mazurek\Source\Repos\NewRepo2\AHP2\AHP2\bin\AHP2.dll.lastcodeanalysissucceeded
