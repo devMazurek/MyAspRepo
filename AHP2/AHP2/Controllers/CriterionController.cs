@@ -55,9 +55,9 @@ namespace AHP2.Controllers
                     }      
                 }
 
-                UpdateRatings(_ormContext.CriterionsContext
+               /* UpdateRatings(_ormContext.CriterionsContext
                     .Where(c => c.Objective.Id == criterionVM.Objective.Id)
-                    .ToList());
+                    .ToList());*/
 
                 return RedirectToAction("Index", "SubCriterion");
             }
@@ -97,23 +97,6 @@ namespace AHP2.Controllers
             }
         }
 
-        /*
-        [HttpPost, ActionName("Delete")]
-        public ActionResult Delete(int? id)
-        {
-            if (id != null || id != 0)
-            {
-                var criterion = _ormContext.CriterionsContext.Where(c => c.Id == id).FirstOrDefault();
-                _ormContext.CriterionsContext.Remove(criterion);
-                _ormContext.SaveChanges();
-            }
-            return new ViewResult
-            {
-                ViewName = "~/Views/Errors/Error.cshtml",
-            };
-
-        }*/
-
         private bool IsExisting(int id)
         {
             if (_ormContext.CriterionsContext.Where(c => c.Id == id).FirstOrDefault() != null)
@@ -150,34 +133,6 @@ namespace AHP2.Controllers
             }
 
             return true;
-        }
-
-        private void UpdateRatings(List<Criterion> criterions)
-        {
-            AhpAlgorithm.AhpAlgorithm ahp = new AhpAlgorithm.AhpAlgorithm();
-
-            var comparableList = ahp.SelectComparable(criterions);
-
-            foreach(var comparable in comparableList)
-            {
-                var cmp = _ormContext.CriterionRatingContext
-                    .Where(cr => cr.Criterion.Id == comparable.Criterion1.Id
-                    && cr.CriterionComparable.Id == comparable.Criterion2.Id).FirstOrDefault();
-                if (cmp == null)
-                {
-                    var criterionRating = _ormContext.CriterionRatingContext.Add(new CriterionRating
-                    {
-                        Criterion = _ormContext.CriterionsContext
-                       .Where(c => c.Id == comparable.Criterion1.Id)
-                       .FirstOrDefault(),
-                        CriterionComparable = _ormContext.CriterionsContext
-                       .Where(c => c.Id == comparable.Criterion2.Id)
-                       .FirstOrDefault(),
-                        Rate = "1"
-                    });
-                }
-            }
-            _ormContext.SaveChanges();
         }
     }
 }

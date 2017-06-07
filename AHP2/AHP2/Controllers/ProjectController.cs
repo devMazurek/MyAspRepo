@@ -59,22 +59,17 @@ namespace AHP2.Controllers
                 project.CreateAt = project.EditAt = DateTime.Now.Date;
                 _ormContext.ProjectsContext.Add(project);
                 _ormContext.SaveChanges();
-                var lastId = _ormContext.ProjectsContext.ToList().LastOrDefault().Id;
                 return RedirectToAction("Index");
             }
             return View();
         }
 
-        /*public ActionResult Delete(int? id)
+        public ActionResult Delete(int? id)
         {
             if(id != null)
             {
                 var project = _ormContext.ProjectsContext.Where(p => p.Id == id).FirstOrDefault();
-                var objectiv = _ormContext.ObjectivesContext.Where(o => o.Project.Id == project.Id).FirstOrDefault();
-                var alternatives = _ormContext.AlternativesContext.Where(a => a.ObjectiveId == objectiv.Id).ToList();
                 _ormContext.ProjectsContext.Remove(project);
-                if(alternatives.Count > 0)
-                    _ormContext.AlternativesContext.RemoveRange(alternatives);
                 _ormContext.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -84,6 +79,6 @@ namespace AHP2.Controllers
                 ViewName = "~/Views/Errors/Error.cshtml",
                 ViewData = new ViewDataDictionary(handleErrorInfo)
             };
-        }   */
+        }   
     }
 }

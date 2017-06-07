@@ -3,6 +3,13 @@
 @{
     ViewBag.Title = "Update";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    if(Model.Objective == null)
+    {
+        using (AHP2.Models.OrmContext ormContext = new AHP2.Models.OrmContext())
+        {
+            Model.Objective = ormContext.ObjectivesContext.Where(o => o.Id == Model.PartialMenuViewModels.ObjectRouting).FirstOrDefault();
+        }
+    }
 }
 
 <h2>@Model.PartialMenuViewModels.GetNameMenuItem(Model.PartialMenuViewModels.MenuItem)</h2>
