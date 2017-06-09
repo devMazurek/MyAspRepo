@@ -6,12 +6,12 @@ w odniesieniu do wyznaczonych alternatyw.
 
 Najprościej model ten można przedstawić za pomocą następujących poziomów:
 1. Cel - nadrzędny motyw podejmowania decyzji (np. kupno samochodu)
-2. Alternatywy - wstępnie wybrane propozycje zgdone obranym celem (np. Honda Civic, VW Golf)
+2. Alternatywy - wstępnie wybrane propozycje zgdone z obranym celem (np. Honda Civic, VW Golf)
 3. Kryteria - czynniki, którymi będziemy się kierować przy wyborze alternatywy (np. wyposażenie, cena, przzestronność)
 4. Dalsze podpoziomy poszczególnych kryteriów, np. subkryteria (np. dla wyposażenia: klimatyzacja, nagłośnienie, fotele z fukcją masażu)
 
-Użytkownik ocenia parami kryteria (każdy z każdym) w 9 - stopniowej skali Saat'yego, gdzie ocena 1 to porównywalna ważnośći obu kryteriów a 9
-to silna przewa jednego kryterium nad drugim.
+Użytkownik ocenia parami kryteria (każdy z każdym) w 9 - stopniowej skali Saat'yego, gdzie ocena 1 to porównywalna ważności obu kryteriów, a 9
+to silna przewaga jednego kryterium nad drugim.
 W przykładowym modelu czterostopniowym (cel, alternatywy, kryteria, subkryteria) należy wykonać następujące porównania:
 1. Ocena wszystkich kryteriów ze sobą w odniesieniu do celu decyzyjnego
 2. Ocena wszystkich subkryteriów ze sobą w odniesieniu do nadrzednego kryteium
